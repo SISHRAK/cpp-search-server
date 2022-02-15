@@ -10,6 +10,7 @@
 using namespace std;
 
 const int MAX_RESULT_DOCUMENT_COUNT = 5;
+const double p = 1e-6; 
 
 string ReadLine() {
     string s;
@@ -78,10 +79,9 @@ public:
     vector<Document> FindTopDocuments(const string& raw_query, DocumentPredicate document_predicate) const {
         const Query query = ParseQuery(raw_query);
         auto matched_documents = FindAllDocuments(query, document_predicate);
-
         sort(matched_documents.begin(), matched_documents.end(),
              [](const Document& lhs, const Document& rhs) {
-                 if (abs(lhs.relevance - rhs.relevance) < 1e-6) {
+                 if (abs(lhs.relevance - rhs.relevance) < p) {
                      return lhs.rating > rhs.rating;
                  } else {
                      return lhs.relevance > rhs.relevance;
@@ -100,14 +100,12 @@ public:
     int GetDocumentCount() const {
         return documents_.size();
     }
+    
     vector<Document> FindTopDocuments(const string& raw_query, DocumentStatus status1 ) const{
-
         auto res = FindTopDocuments(raw_query, [status1](int document_id, DocumentStatus status, int rating){return status == status1;});
         return res;
     }
-
-
-
+    
     tuple<vector<string>, DocumentStatus> MatchDocument(const string& raw_query, int document_id) const {
         const Query query = ParseQuery(raw_query);
         vector<string> matched_words;
@@ -244,13 +242,6 @@ private:
     }
 };
 
-
-
-
-
-// ==================== для примера =========================
-
-
 void PrintDocument(const Document& document) {
     cout << "{ "s
          << "document_id = "s << document.id << ", "s
@@ -258,6 +249,7 @@ void PrintDocument(const Document& document) {
          << "rating = "s << document.rating
          << " }"s << endl;
 }
+
 int main() {
     SearchServer search_server;
     search_server.SetStopWords("и в на"s);
