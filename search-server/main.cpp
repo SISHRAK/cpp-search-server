@@ -22,7 +22,7 @@ void TestExcludeStopWordsFromAddedDocumentContent() {
     }
 }
 
-void AddingDocuments() {
+void TestAddingDocuments() {
     const int doc_id1 = 0;
     const int doc_id2 = 1;
     const int doc_id3 = 2;
@@ -108,7 +108,7 @@ void AddingDocuments() {
 
 void TestSearchServer() {
     RUN_TEST(TestExcludeStopWordsFromAddedDocumentContent);
-    RUN_TEST(AddingDocuments);
+    RUN_TEST(TestAddingDocuments);
 }
 
 
