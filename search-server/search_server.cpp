@@ -23,7 +23,12 @@ void SearchServer::AddDocument(int document_id, const std::string& document, Doc
     documents_.emplace(document_id, DocumentData{ ComputeAverageRating(ratings), status });
     document_ids_.push_back(document_id);
 }
-
+int SearchServer::GetDocumentId(int index) const{    
+    if (GetDocumentCount() < index || index < 0) {
+        throw std::out_of_range("non-existend ID");
+    }
+    return document_ids_.at(index);    
+    }
 std::vector<Document> SearchServer::FindTopDocuments(const std::string& raw_query, DocumentStatus status) const {
 
     return FindTopDocuments(
