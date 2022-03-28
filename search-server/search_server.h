@@ -9,6 +9,7 @@
 #include "string_processing.h"
 
 const int MAX_RESULT_DOCUMENT_COUNT = 5;
+const double EPSILON = 1e-6; 
 
 class SearchServer {
 
@@ -52,13 +53,7 @@ public:
         return documents_.size();
     }
 
-    int GetDocumentId(int index)const {
-
-        if (GetDocumentCount() < index || index < 0) {
-            throw std::out_of_range("non-existend ID");
-        }
-        return document_ids_.at(index);
-    }
+    int GetDocumentId(int index)const;
 
     template <typename DocumentPredicate>
     std::vector<Document> FindTopDocuments(const std::string& raw_query, DocumentPredicate document_predicate) const;
@@ -114,7 +109,7 @@ std::vector<Document> SearchServer::FindTopDocuments(const std::string& raw_quer
     auto matched_documents = FindAllDocuments(query, document_predicate);
 
     sort(matched_documents.begin(), matched_documents.end(), [](const Document& lhs, const Document& rhs) {
-        if (abs(lhs.relevance - rhs.relevance) < 1e-6) {
+        if (abs(lhs.relevance - rhs.relevance) < EPSILON) {
             return lhs.rating > rhs.rating;
         }
         else {
