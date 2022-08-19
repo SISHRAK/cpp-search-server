@@ -146,8 +146,8 @@ const std::map<std::string, double>& SearchServer::GetWordFrequencies(int docume
 
 void SearchServer::RemoveDocument(int document_id) {
     documents_.erase(document_id);
-    for (const auto& w : document_to_word_freqs_.at(document_id)) {
-        word_to_document_freqs_.erase(w.first);
+    for (const auto& word : document_to_word_freqs_.at(document_id)) {
+        word_to_document_freqs_.erase(word.first);
     }
     document_to_word_freqs_.erase(document_id);
     document_ids_.erase(std::remove(document_ids_.begin(), document_ids_.end(),document_id));
