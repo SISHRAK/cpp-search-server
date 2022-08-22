@@ -16,11 +16,7 @@ public:
     // с помощью using для удобства
     using Clock = std::chrono::steady_clock;
 
-    LogDuration(const std::string& id) : id_(id) {
-    }
-    
-     LogDuration(const std::string& id, std::ostream& out) : id_(id), start_time_(Clock::now()), out_(out) {
-    
+    LogDuration(const std::string& id, std::ostream& out) : id_(id) {
     }
 
     ~LogDuration() {
