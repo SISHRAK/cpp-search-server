@@ -22,7 +22,7 @@ void RemoveDuplicates(SearchServer& search_server) {
         all_words.emplace(words);
     }
 
-    for (const auto& document_id : document_ids) {
+    for (const auto document_id : document_ids) {
         search_server.RemoveDocument(document_id);
     }
 }
