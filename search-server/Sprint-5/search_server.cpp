@@ -146,15 +146,11 @@ const std::map<std::string, double>& SearchServer::GetWordFrequencies(int docume
 
 void SearchServer::RemoveDocument(int document_id) {
     documents_.erase(document_id);
-    document_ids_.erase(document_id);
-    word_to_document_freqs_id_.erase(document_id);
-    for (auto [str, id_] : word_to_document_freqs_) {
-        for (auto [id__, flt] : id_) {
-            if (id__ == document_id) {
-                word_to_document_freqs_.at(str).erase(id__);
-            }
-        }
+    for (const auto& word_to_frequency : document_to_word_freqs_.at(document_id)) {
+        word_to_document_freqs_.erase(word_to_frequency.first);
     }
+    document_to_word_freqs_.erase(document_id);
+    document_ids_.erase(document_id);
 }
 
 std::vector<int>::const_iterator SearchServer::begin() const {
