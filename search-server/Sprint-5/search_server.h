@@ -42,7 +42,7 @@ private:
         int rating;
         DocumentStatus status;
     };
-    std::vector<int> document_ids_;
+    std::set<int> document_ids_;
     const std::set<std::string> stop_words_;
     std::map<std::string, std::map<int, double>> word_to_document_freqs_;
     std::map<int, std::map<std::string, double>> document_to_word_freqs_;
